@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Copyright>2022 © Yusuf Yorulmaz</Copyright>
+		<Description>Generic Repository</Description>
+		<Authors>Yusuf Yorulmaz</Authors>
+		<Company>yorulmaz software</Company>
+		<Version>0.0.3</Version>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/yyorulmaz/GenRep</RepositoryUrl>
+		<PackageTags>generic-repository;repository;crud;orm;micro-orm;entity-framework-repository</PackageTags>
+		<PackageDescription>Generic repository</PackageDescription>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<PackageId>GenRep</PackageId>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
+	</ItemGroup>
+
+</Project>
