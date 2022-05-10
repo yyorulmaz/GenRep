@@ -2,7 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/yyorulmaz/GenRep</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>generic repository;repository;crud;orm;micro orm;entity framework repository</PackageTags>
+    <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
