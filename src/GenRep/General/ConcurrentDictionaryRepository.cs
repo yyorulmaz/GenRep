@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GenRep.General
 {
-    internal class ConcurrentDictionaryRepository<T> : IConcurrentDictionaryRepository<T>
+    public class ConcurrentDictionaryRepository<T> : IConcurrentDictionaryRepository<T>
             where T : class, new()
     {
         protected readonly ConcurrentDictionary<string, T> _db;
