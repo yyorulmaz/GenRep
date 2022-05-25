@@ -6,7 +6,7 @@
 		<Description>Generic Repository</Description>
 		<Authors>Yusuf Yorulmaz</Authors>
 		<Company>yorulmaz software</Company>
-		<Version>0.0.3</Version>
+		<Version>0.0.4</Version>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -19,6 +19,7 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<PackageId>GenRep</PackageId>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
