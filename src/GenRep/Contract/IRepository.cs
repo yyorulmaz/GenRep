@@ -13,10 +13,10 @@ namespace GenRep.Contract
         Task<T> SelectAsync(Expression<Func<T, bool>> filter, CancellationToken cancellationToken = default);
         Task<List<T>> SelectAllAsync(Expression<Func<T, bool>> filter = null, CancellationToken cancellationToken = default);
 
-        Task<T> OrderBy(Expression<Func<T, bool>> filter, CancellationToken cancellationToken = default);
-        Task<List<T>> OrderByList(Expression<Func<T, bool>> filter, CancellationToken cancellationToken = default);
-        Task<T> OrderByDescending(Expression<Func<T, bool>> filter, CancellationToken cancellationToken = default);
-        Task<List<T>> OrderByDescendingList(Expression<Func<T, bool>> filter, CancellationToken cancellationToken = default);
+        Task<T> OrderBy(Expression<Func<T, object>> filter, CancellationToken cancellationToken = default);
+        Task<List<T>> OrderByList(Expression<Func<T, object>> filter, CancellationToken cancellationToken = default);
+        Task<T> OrderByDescending(Expression<Func<T, object>> filter, CancellationToken cancellationToken = default);
+        Task<List<T>> OrderByDescendingList(Expression<Func<T, object>> filter, CancellationToken cancellationToken = default);
         #endregion
 
         #region INSERT

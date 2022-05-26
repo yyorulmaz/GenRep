@@ -42,22 +42,22 @@ namespace GenRep.EntityFramework
 
 
 
-        public async Task<TEntity> OrderBy(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+        public async Task<TEntity> OrderBy(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
                 return await context.Set<TEntity>().OrderBy(filter).FirstOrDefaultAsync(cancellationToken);
         }
-        public async Task<List<TEntity>> OrderByList(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+        public async Task<List<TEntity>> OrderByList(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
                 return await context.Set<TEntity>().OrderBy(filter).ToListAsync(cancellationToken);
         }
-        public async Task<TEntity> OrderByDescending(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+        public async Task<TEntity> OrderByDescending(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
                 return await context.Set<TEntity>().OrderByDescending(filter).FirstOrDefaultAsync(cancellationToken);
         }
-        public async Task<List<TEntity>> OrderByDescendingList(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+        public async Task<List<TEntity>> OrderByDescendingList(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
                 return await context.Set<TEntity>().OrderByDescending(filter).ToListAsync(cancellationToken);
@@ -172,22 +172,22 @@ namespace GenRep.EntityFramework
 
 
 
-        public async Task<TEntity> OrderBy(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+        public async Task<TEntity> OrderBy(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
                 return await context.Set<TEntity>().OrderBy(filter).FirstOrDefaultAsync(cancellationToken);
         }
-        public async Task<List<TEntity>> OrderByList(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+        public async Task<List<TEntity>> OrderByList(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
                 return await context.Set<TEntity>().OrderBy(filter).ToListAsync(cancellationToken);
         }
-        public async Task<TEntity> OrderByDescending(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+        public async Task<TEntity> OrderByDescending(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
                 return await context.Set<TEntity>().OrderByDescending(filter).FirstOrDefaultAsync(cancellationToken);
         }
-        public async Task<List<TEntity>> OrderByDescendingList(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+        public async Task<List<TEntity>> OrderByDescendingList(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
                 return await context.Set<TEntity>().OrderByDescending(filter).ToListAsync(cancellationToken);
