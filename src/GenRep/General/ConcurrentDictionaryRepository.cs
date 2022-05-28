@@ -1,7 +1,9 @@
 ﻿using GenRep.Contract;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace GenRep.General
 {
@@ -19,9 +21,12 @@ namespace GenRep.General
             _db.TryGetValue(key, out var rtrn);
             return rtrn;
         }
-        public List<T> GetAll()
+        public List<T> GetAll(Func<T, bool> filter = null)
         {
-            return _db.Values.ToList();
+            if (filter == null)
+                return _db.Values.ToList();
+            else
+                return _db.Values.Where(filter).ToList();
         }
         public bool TryAdd(string key, T value)
         {
