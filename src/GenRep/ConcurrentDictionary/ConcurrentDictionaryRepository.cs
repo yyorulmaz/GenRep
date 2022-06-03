@@ -16,6 +16,8 @@ namespace GenRep.General
             _db = db;
         }
 
+        public int Count => _db.Count;
+
         public T TryGetValue(string key)
         {
             _db.TryGetValue(key, out var rtrn);
