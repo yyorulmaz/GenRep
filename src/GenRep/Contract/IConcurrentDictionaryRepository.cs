@@ -4,7 +4,9 @@ using System.Linq.Expressions;
 
 namespace GenRep.Contract
 {
-    public interface IConcurrentDictionaryRepository<T> where T : class, new()
+    public interface IConcurrentDictionaryRepository<T> 
+        //where T : class, new()
+        where T : notnull, new()
     {
         public int Count { get; }
         T TryGetValue(string key);

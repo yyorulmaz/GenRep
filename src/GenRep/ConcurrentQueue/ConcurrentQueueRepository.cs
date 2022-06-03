@@ -4,7 +4,8 @@ using System.Collections.Concurrent;
 
 namespace GenRep.ConcurrentQueue
 {
-    public class ConcurrentQueueRepository<T> : IConcurrentQueueRepository<T> where T : class, new()
+    public class ConcurrentQueueRepository<T> : IConcurrentQueueRepository<T> 
+        //where T : class, new()
     {
         protected readonly ConcurrentQueue<T> _db;
         public ConcurrentQueueRepository(ConcurrentQueue<T> db)
