@@ -9,7 +9,7 @@ namespace GenRep.General
 {
     public class ConcurrentDictionaryRepository<T> : IConcurrentDictionaryRepository<T>
             //where T : class, new()
-        where T : notnull, new()
+        where T : notnull
     {
         protected readonly ConcurrentDictionary<string, T> _db;
         public ConcurrentDictionaryRepository(ConcurrentDictionary<string, T> db)
@@ -37,8 +37,7 @@ namespace GenRep.General
         }
         public bool TryUpdate(string key, T value)
         {
-            T valuenew = new T();
-            return _db.TryUpdate(key, value, valuenew);
+            return _db.TryUpdate(key, value, value);
         }
         public T TryRemove(string key)
         {

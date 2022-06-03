@@ -6,7 +6,7 @@ namespace GenRep.Contract
 {
     public interface IConcurrentDictionaryRepository<T> 
         //where T : class, new()
-        where T : notnull, new()
+        where T : notnull
     {
         public int Count { get; }
         T TryGetValue(string key);
