@@ -8,7 +8,8 @@ using System.Linq.Expressions;
 namespace GenRep.General
 {
     public class ConcurrentDictionaryRepository<T> : IConcurrentDictionaryRepository<T>
-            where T : class, new()
+            //where T : class, new()
+        where T : notnull, new()
     {
         protected readonly ConcurrentDictionary<string, T> _db;
         public ConcurrentDictionaryRepository(ConcurrentDictionary<string, T> db)
@@ -36,7 +37,8 @@ namespace GenRep.General
         }
         public bool TryUpdate(string key, T value)
         {
-            return _db.TryUpdate(key, value, null);
+            T valuenew = new T();
+            return _db.TryUpdate(key, value, valuenew);
         }
         public T TryRemove(string key)
         {

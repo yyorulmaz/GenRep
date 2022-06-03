@@ -2,7 +2,8 @@
 
 namespace GenRep.Contract
 {
-    public interface IConcurrentQueueRepository<T> where T : class, new()
+    public interface IConcurrentQueueRepository<T> 
+        //where T : class, new()
     {
         public int Count { get; }
         public T TryGet();
