@@ -22,7 +22,7 @@ namespace GenRep.EntityFramework
         public async Task<TEntity> SelectByIdAsync(object id, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
-                return await context.Set<TEntity>().FindAsync(id, cancellationToken);
+                return await context.Set<TEntity>().FindAsync(new object[] { id }, cancellationToken);
         }
         public async Task<TEntity> SelectAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
         {
@@ -152,7 +152,7 @@ namespace GenRep.EntityFramework
         public async Task<TEntity> SelectByIdAsync(object id, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
-                return await context.Set<TEntity>().FindAsync(id, cancellationToken);
+                return await context.Set<TEntity>().FindAsync(new object[] { id }, cancellationToken);
         }
         public async Task<TEntity> SelectAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
         {
