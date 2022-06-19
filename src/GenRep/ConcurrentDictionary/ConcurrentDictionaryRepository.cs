@@ -24,6 +24,10 @@ namespace GenRep.General
             _db.TryGetValue(key, out var rtrn);
             return rtrn;
         }
+        public T TryGetValue(Func<T, bool> filter)
+        {
+            return _db.Values.FirstOrDefault(filter);
+        }
         public List<T> GetAll(Func<T, bool> filter = null)
         {
             if (filter == null)
