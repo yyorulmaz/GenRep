@@ -9,26 +9,44 @@ using System.Threading.Tasks;
 
 namespace GenRep.EntityFramework
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class EfRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, new()
     {
+        /// <summary>
+        /// 
+        /// </summary>
         protected readonly Func<DbContext> _dbContext;
+        /// <summary>
+        /// 
+        /// </summary>
         public EfRepository(Func<DbContext> dbContext)
         {
             _dbContext = dbContext;
         }
 
         #region SELECT
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> SelectByIdAsync(object id, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
                 return await context.Set<TEntity>().FindAsync(new object[] { id }, cancellationToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> SelectAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
                 return await context.Set<TEntity>().FirstOrDefaultAsync(filter, cancellationToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<List<TEntity>> SelectAllAsync(Expression<Func<TEntity, bool>> filter = null, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
@@ -42,21 +60,33 @@ namespace GenRep.EntityFramework
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> OrderBy(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
                 return await context.Set<TEntity>().OrderBy(filter).FirstOrDefaultAsync(cancellationToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<List<TEntity>> OrderByList(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
                 return await context.Set<TEntity>().OrderBy(filter).ToListAsync(cancellationToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> OrderByDescending(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
                 return await context.Set<TEntity>().OrderByDescending(filter).FirstOrDefaultAsync(cancellationToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<List<TEntity>> OrderByDescendingList(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
@@ -65,6 +95,9 @@ namespace GenRep.EntityFramework
         #endregion
 
         #region INSERT
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
@@ -75,6 +108,9 @@ namespace GenRep.EntityFramework
                 return entity;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<List<TEntity>> InsertRangeAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
@@ -87,6 +123,9 @@ namespace GenRep.EntityFramework
         #endregion
 
         #region UPDATE
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
@@ -97,6 +136,9 @@ namespace GenRep.EntityFramework
                 return entity;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<List<TEntity>> UpdateRangeAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
@@ -110,6 +152,9 @@ namespace GenRep.EntityFramework
         #endregion
 
         #region DELETE
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> DeleteAsync(object id, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
@@ -121,6 +166,9 @@ namespace GenRep.EntityFramework
                 return entity;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
@@ -131,6 +179,9 @@ namespace GenRep.EntityFramework
                 return true;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<bool> DeleteRangeAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
         {
             using (var context = _dbContext())
@@ -144,21 +195,33 @@ namespace GenRep.EntityFramework
         #endregion
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class EfRepository<TEntity, TContext> : IRepository<TEntity>
         where TEntity : class, new()
         where TContext : DbContext, new()
     {
         #region SELECT
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> SelectByIdAsync(object id, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
                 return await context.Set<TEntity>().FindAsync(new object[] { id }, cancellationToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> SelectAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
                 return await context.Set<TEntity>().FirstOrDefaultAsync(filter, cancellationToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<List<TEntity>> SelectAllAsync(Expression<Func<TEntity, bool>> filter = null, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
@@ -171,22 +234,33 @@ namespace GenRep.EntityFramework
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> OrderBy(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
                 return await context.Set<TEntity>().OrderBy(filter).FirstOrDefaultAsync(cancellationToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<List<TEntity>> OrderByList(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
                 return await context.Set<TEntity>().OrderBy(filter).ToListAsync(cancellationToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> OrderByDescending(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
                 return await context.Set<TEntity>().OrderByDescending(filter).FirstOrDefaultAsync(cancellationToken);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<List<TEntity>> OrderByDescendingList(Expression<Func<TEntity, object>> filter, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
@@ -195,6 +269,9 @@ namespace GenRep.EntityFramework
         #endregion
 
         #region INSERT
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
@@ -205,6 +282,9 @@ namespace GenRep.EntityFramework
                 return entity;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<List<TEntity>> InsertRangeAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
@@ -218,6 +298,9 @@ namespace GenRep.EntityFramework
         #endregion
 
         #region UPDATE
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
@@ -228,6 +311,9 @@ namespace GenRep.EntityFramework
                 return entity;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<List<TEntity>> UpdateRangeAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
@@ -241,6 +327,9 @@ namespace GenRep.EntityFramework
         #endregion
 
         #region DELETE
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<TEntity> DeleteAsync(object id, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
@@ -252,6 +341,9 @@ namespace GenRep.EntityFramework
                 return entity;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
@@ -262,6 +354,9 @@ namespace GenRep.EntityFramework
                 return true;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task<bool> DeleteRangeAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
         {
             using (var context = new TContext())
