@@ -7,9 +7,10 @@ namespace GenRep.Contract
     /// <summary>
     /// 
     /// </summary>
-    public interface IConcurrentDictionaryRepository<T> 
+    public interface IConcurrentDictionaryRepository<TKey, TValue> 
         //where T : class, new()
-        where T : notnull
+        where TKey : notnull
+        where TValue : notnull
     {
         /// <summary>
         /// 
@@ -18,27 +19,27 @@ namespace GenRep.Contract
         /// <summary>
         /// 
         /// </summary>
-        T TryGetValue(string key);
+        TValue TryGetValue(TKey key);
         /// <summary>
         /// 
         /// </summary>
-        T TryGetValue(Func<T, bool> filter);
+        TValue TryGetValue(Func<TValue, bool> filter);
         /// <summary>
         /// 
         /// </summary>
-        List<T> GetAll(Func<T, bool> filter = null);
+        List<TValue> GetAll(Func<TValue, bool> filter = null);
         /// <summary>
         /// 
         /// </summary>
-        bool TryAdd(string key, T value);
+        bool TryAdd(TKey key, TValue value);
         /// <summary>
         /// 
         /// </summary>
-        bool TryUpdate(string key, T value);
+        bool TryUpdate(TKey key, TValue value);
         /// <summary>
         /// 
         /// </summary>
-        T TryRemove(string key);
+        TValue TryRemove(TKey key);
 
 
         /// <summary>
@@ -52,6 +53,6 @@ namespace GenRep.Contract
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedDeleted;
+        public event Action<bool> ChangedRemoved;
     }
 }

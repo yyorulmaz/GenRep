@@ -6,7 +6,7 @@ namespace GenRep.Contract
     /// <summary>
     /// 
     /// </summary>
-    public interface IConcurrentQueueRepository<T> 
+    public interface IConcurrentQueueRepository<TValue> 
         //where T : class, new()
     {
         /// <summary>
@@ -16,19 +16,19 @@ namespace GenRep.Contract
         /// <summary>
         /// 
         /// </summary>
-        public T TryGet();
+        public TValue TryGet();
         /// <summary>
         /// 
         /// </summary>
-        public ConcurrentQueue<T> GetAll();
+        public ConcurrentQueue<TValue> GetAll();
         /// <summary>
         /// 
         /// </summary>
-        public bool TryAdd(T value);
+        public bool TryAdd(TValue value);
         /// <summary>
         /// 
         /// </summary>
-        public T TryRemove();
+        public TValue TryRemove();
 
         /// <summary>
         /// 
@@ -37,6 +37,6 @@ namespace GenRep.Contract
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedDeleted;
+        public event Action<bool> ChangedRemoved;
     }
 }

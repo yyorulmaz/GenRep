@@ -10,18 +10,19 @@ namespace GenRep.General
     /// <summary>
     /// 
     /// </summary>
-    public class ConcurrentDictionaryRepository<T> : IConcurrentDictionaryRepository<T>
+    public class ConcurrentDictionaryRepository<TKey, TValue> : IConcurrentDictionaryRepository<TKey, TValue>
             //where T : class, new()
-        where T : notnull
+        where TKey : notnull
+        where TValue : notnull
     {
         /// <summary>
         /// 
         /// </summary>
-        protected readonly ConcurrentDictionary<string, T> _db;
+        protected readonly ConcurrentDictionary<TKey, TValue> _db;
         /// <summary>
         /// 
         /// </summary>
-        public ConcurrentDictionaryRepository(ConcurrentDictionary<string, T> db)
+        public ConcurrentDictionaryRepository(ConcurrentDictionary<TKey, TValue> db)
         {
             _db = db;
         }
@@ -34,7 +35,7 @@ namespace GenRep.General
         /// <summary>
         /// 
         /// </summary>
-        public T TryGetValue(string key)
+        public TValue TryGetValue(TKey key)
         {
             _db.TryGetValue(key, out var rtrn);
             return rtrn;
@@ -42,14 +43,14 @@ namespace GenRep.General
         /// <summary>
         /// 
         /// </summary>
-        public T TryGetValue(Func<T, bool> filter)
+        public TValue TryGetValue(Func<TValue, bool> filter)
         {
             return _db.Values.FirstOrDefault(filter);
         }
         /// <summary>
         /// 
         /// </summary>
-        public List<T> GetAll(Func<T, bool> filter = null)
+        public List<TValue> GetAll(Func<TValue, bool> filter = null)
         {
             if (filter == null)
                 return _db.Values.ToList();
@@ -59,7 +60,7 @@ namespace GenRep.General
         /// <summary>
         /// 
         /// </summary>
-        public bool TryAdd(string key, T value)
+        public bool TryAdd(TKey key, TValue value)
         {
             var result = _db.TryAdd(key, value);
             ChangedAdded?.Invoke(result);
@@ -68,7 +69,7 @@ namespace GenRep.General
         /// <summary>
         /// 
         /// </summary>
-        public bool TryUpdate(string key, T value)
+        public bool TryUpdate(TKey key, TValue value)
         {
             var result = _db.TryUpdate(key, value, value);
             ChangedUpdated?.Invoke(result);
@@ -77,10 +78,10 @@ namespace GenRep.General
         /// <summary>
         /// 
         /// </summary>
-        public T TryRemove(string key)
+        public TValue TryRemove(TKey key)
         {
             _db.TryRemove(key, out var rtrn);
-            ChangedDeleted?.Invoke(true);
+            ChangedRemoved?.Invoke(true);
             return rtrn;
         }
 
@@ -95,6 +96,6 @@ namespace GenRep.General
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedDeleted;
+        public event Action<bool> ChangedRemoved;
     }
 }
