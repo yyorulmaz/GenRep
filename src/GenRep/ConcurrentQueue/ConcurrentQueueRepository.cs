@@ -4,18 +4,18 @@ using System.Collections.Concurrent;
 
 namespace GenRep.ConcurrentQueue
 {
-    public class ConcurrentQueueRepository<T> : IConcurrentQueueRepository<T> 
+    public class ConcurrentQueueRepository<TValue> : IConcurrentQueueRepository<TValue> 
         //where T : class, new()
     {
         /// <summary>
         /// 
         /// </summary>
-        protected readonly ConcurrentQueue<T> _db;
+        protected readonly ConcurrentQueue<TValue> _db;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="db"></param>
-        public ConcurrentQueueRepository(ConcurrentQueue<T> db)
+        public ConcurrentQueueRepository(ConcurrentQueue<TValue> db)
         {
             _db = db;
         }
@@ -29,7 +29,7 @@ namespace GenRep.ConcurrentQueue
         /// 
         /// </summary>
         /// <returns></returns>
-        public T TryGet()
+        public TValue TryGet()
         {
             _db.TryPeek(out var data);
             return data;
@@ -39,7 +39,7 @@ namespace GenRep.ConcurrentQueue
         /// 
         /// </summary>
         /// <returns></returns>
-        public ConcurrentQueue<T> GetAll() 
+        public ConcurrentQueue<TValue> GetAll() 
         { 
             return _db; 
         }
@@ -48,7 +48,7 @@ namespace GenRep.ConcurrentQueue
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public bool TryAdd(T value)
+        public bool TryAdd(TValue value)
         {
             try
             {
@@ -66,10 +66,10 @@ namespace GenRep.ConcurrentQueue
         /// 
         /// </summary>
         /// <returns></returns>
-        public T TryRemove()
+        public TValue TryRemove()
         {
             _db.TryDequeue(out var data);
-            ChangedDeleted?.Invoke(true);
+            ChangedRemoved?.Invoke(true);
             return data;
         }
 
@@ -80,6 +80,6 @@ namespace GenRep.ConcurrentQueue
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedDeleted;
+        public event Action<bool> ChangedRemoved;
     }
 }
