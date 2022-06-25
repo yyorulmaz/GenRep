@@ -16,6 +16,10 @@ namespace GenRep.Contract
         /// <summary>
         /// 
         /// </summary>
+        public ConcurrentQueue<TValue> Data { get; }
+        /// <summary>
+        /// 
+        /// </summary>
         public TValue TryGet();
         /// <summary>
         /// 
