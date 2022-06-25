@@ -31,6 +31,10 @@ namespace GenRep.General
         /// 
         /// </summary>
         public int Count => _db.Count;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ConcurrentDictionary<TKey, TValue> Data => _db;
 
         /// <summary>
         /// 

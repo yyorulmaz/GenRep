@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -16,6 +17,10 @@ namespace GenRep.Contract
         /// 
         /// </summary>
         public int Count { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ConcurrentDictionary<TKey, TValue> Data { get; }
         /// <summary>
         /// 
         /// </summary>

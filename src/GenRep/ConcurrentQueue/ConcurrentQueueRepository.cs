@@ -28,6 +28,11 @@ namespace GenRep.ConcurrentQueue
         /// <summary>
         /// 
         /// </summary>
+        public ConcurrentQueue<TValue> Data => _db;
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         public TValue TryGet()
         {
