@@ -12,7 +12,7 @@ namespace GenRep.General
     /// 
     /// </summary>
     public class ConcurrentDictionaryRepository<TKey, TValue> : IConcurrentDictionaryRepository<TKey, TValue>
-            //where T : class, new()
+        //where T : class, new()
         where TKey : notnull
         where TValue : notnull
     {
@@ -68,7 +68,8 @@ namespace GenRep.General
         public bool TryAdd(TKey key, TValue value)
         {
             var result = _db.TryAdd(key, value);
-            Task.Run(() => ChangedAdded?.Invoke(result));
+            if (result)
+                Task.Run(() => ChangedAdded?.Invoke(result));
             return result;
         }
         /// <summary>
@@ -77,7 +78,8 @@ namespace GenRep.General
         public bool TryUpdate(TKey key, TValue value)
         {
             var result = _db.TryUpdate(key, value, value);
-            Task.Run(() => ChangedUpdated?.Invoke(result));
+            if (result)
+                Task.Run(() => ChangedUpdated?.Invoke(result));
             return result;
         }
         /// <summary>
@@ -86,7 +88,8 @@ namespace GenRep.General
         public TValue TryRemove(TKey key)
         {
             _db.TryRemove(key, out var rtrn);
-            Task.Run(()=> ChangedRemoved?.Invoke(true));
+            if (rtrn != null)
+                Task.Run(() => ChangedRemoved?.Invoke(true));
             return rtrn;
         }
 
