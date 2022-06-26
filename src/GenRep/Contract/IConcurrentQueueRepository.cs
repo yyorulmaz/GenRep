@@ -37,10 +37,10 @@ namespace GenRep.Contract
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedAdded;
+        public event Action<TValue> ChangedAdded;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedRemoved;
+        public event Action<TValue> ChangedRemoved;
     }
 }

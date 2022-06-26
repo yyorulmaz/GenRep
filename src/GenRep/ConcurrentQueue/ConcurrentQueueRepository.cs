@@ -59,7 +59,7 @@ namespace GenRep.ConcurrentQueue
             try
             {
                 _db.Enqueue(value);
-                Task.Run(() => ChangedAdded?.Invoke(true));
+                Task.Run(() => ChangedAdded?.Invoke(value));
                 return true;
             }
             catch (Exception)
@@ -74,19 +74,19 @@ namespace GenRep.ConcurrentQueue
         /// <returns></returns>
         public TValue TryRemove()
         {
-            var result = _db.TryDequeue(out var data);
+            var result = _db.TryDequeue(out var value);
             if (result)
-                Task.Run(() => ChangedRemoved?.Invoke(true));
-            return data;
+                Task.Run(() => ChangedRemoved?.Invoke(value));
+            return value;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedAdded;
+        public event Action<TValue> ChangedAdded;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedRemoved;
+        public event Action<TValue> ChangedRemoved;
     }
 }
