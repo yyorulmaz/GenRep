@@ -1,6 +1,7 @@
 ﻿using GenRep.Contract;
 using System;
 using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 namespace GenRep.ConcurrentQueue
 {
@@ -58,7 +59,7 @@ namespace GenRep.ConcurrentQueue
             try
             {
                 _db.Enqueue(value);
-                ChangedAdded?.Invoke(true);
+                Task.Run(() => ChangedAdded?.Invoke(true));
                 return true;
             }
             catch (Exception)
@@ -74,7 +75,7 @@ namespace GenRep.ConcurrentQueue
         public TValue TryRemove()
         {
             _db.TryDequeue(out var data);
-            ChangedRemoved?.Invoke(true);
+            Task.Run(() => ChangedRemoved?.Invoke(true));
             return data;
         }
 
