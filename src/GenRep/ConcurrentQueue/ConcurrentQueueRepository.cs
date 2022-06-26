@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace GenRep.ConcurrentQueue
 {
-    public class ConcurrentQueueRepository<TValue> : IConcurrentQueueRepository<TValue> 
-        //where T : class, new()
+    public class ConcurrentQueueRepository<TValue> : IConcurrentQueueRepository<TValue>
+    //where T : class, new()
     {
         /// <summary>
         /// 
@@ -45,9 +45,9 @@ namespace GenRep.ConcurrentQueue
         /// 
         /// </summary>
         /// <returns></returns>
-        public ConcurrentQueue<TValue> GetAll() 
-        { 
-            return _db; 
+        public ConcurrentQueue<TValue> GetAll()
+        {
+            return _db;
         }
         /// <summary>
         /// 
@@ -74,8 +74,9 @@ namespace GenRep.ConcurrentQueue
         /// <returns></returns>
         public TValue TryRemove()
         {
-            _db.TryDequeue(out var data);
-            Task.Run(() => ChangedRemoved?.Invoke(true));
+            var result = _db.TryDequeue(out var data);
+            if (result)
+                Task.Run(() => ChangedRemoved?.Invoke(true));
             return data;
         }
 

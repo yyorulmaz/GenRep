@@ -6,7 +6,7 @@
 		<Description>Generic Repository</Description>
 		<Authors>Yusuf Yorulmaz</Authors>
 		<Company>yorulmaz software</Company>
-		<Version>0.2.2</Version>
+		<Version>0.2.3</Version>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
