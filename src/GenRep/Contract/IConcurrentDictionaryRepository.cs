@@ -50,14 +50,14 @@ namespace GenRep.Contract
         /// <summary>
         /// 
         /// </summary>
-        public event Action<TValue> ChangedAdded;
+        public event Action<bool> ChangedAdded;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<TValue> ChangedUpdated;
+        public event Action<bool> ChangedUpdated;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<TValue> ChangedRemoved;
+        public event Action<bool> ChangedRemoved;
     }
 }

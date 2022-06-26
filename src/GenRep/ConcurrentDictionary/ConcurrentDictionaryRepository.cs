@@ -69,7 +69,7 @@ namespace GenRep.General
         {
             var result = _db.TryAdd(key, value);
             if (result)
-                Task.Run(() => ChangedAdded?.Invoke(value));
+                Task.Run(() => ChangedAdded?.Invoke(result));
             return result;
         }
         /// <summary>
@@ -79,7 +79,7 @@ namespace GenRep.General
         {
             var result = _db.TryUpdate(key, value, value);
             if (result)
-                Task.Run(() => ChangedUpdated?.Invoke(value));
+                Task.Run(() => ChangedUpdated?.Invoke(result));
             return result;
         }
         /// <summary>
@@ -87,23 +87,23 @@ namespace GenRep.General
         /// </summary>
         public TValue TryRemove(TKey key)
         {
-            _db.TryRemove(key, out var value);
-            if (value != null)
-                Task.Run(() => ChangedRemoved?.Invoke(value));
-            return value;
+            _db.TryRemove(key, out var rtrn);
+            if (rtrn != null)
+                Task.Run(() => ChangedRemoved?.Invoke(true));
+            return rtrn;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public event Action<TValue> ChangedAdded;
+        public event Action<bool> ChangedAdded;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<TValue> ChangedUpdated;
+        public event Action<bool> ChangedUpdated;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<TValue> ChangedRemoved;
+        public event Action<bool> ChangedRemoved;
     }
 }
