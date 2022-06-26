@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace GenRep.General
 {
@@ -67,7 +68,7 @@ namespace GenRep.General
         public bool TryAdd(TKey key, TValue value)
         {
             var result = _db.TryAdd(key, value);
-            ChangedAdded?.Invoke(result);
+            Task.Run(() => ChangedAdded?.Invoke(result));
             return result;
         }
         /// <summary>
@@ -76,7 +77,7 @@ namespace GenRep.General
         public bool TryUpdate(TKey key, TValue value)
         {
             var result = _db.TryUpdate(key, value, value);
-            ChangedUpdated?.Invoke(result);
+            Task.Run(() => ChangedUpdated?.Invoke(result));
             return result;
         }
         /// <summary>
@@ -85,7 +86,7 @@ namespace GenRep.General
         public TValue TryRemove(TKey key)
         {
             _db.TryRemove(key, out var rtrn);
-            ChangedRemoved?.Invoke(true);
+            Task.Run(()=> ChangedRemoved?.Invoke(true));
             return rtrn;
         }
 
