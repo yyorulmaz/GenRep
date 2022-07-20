@@ -9,18 +9,25 @@ namespace GenRep.Contract
     public interface IConcurrentQueueRepository<TValue> 
         //where T : class, new()
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Count { get; }
+        #region Data
         /// <summary>
         /// 
         /// </summary>
         public ConcurrentQueue<TValue> Data { get; }
+        #endregion
+
+        #region Count
         /// <summary>
         /// 
         /// </summary>
-        public TValue TryGet();
+        public int Count { get; }
+        #endregion
+
+        #region CRUD
+        /// <summary>
+        /// 
+        /// </summary>
+        public TValue Get();
         /// <summary>
         /// 
         /// </summary>
@@ -28,19 +35,22 @@ namespace GenRep.Contract
         /// <summary>
         /// 
         /// </summary>
-        public bool TryAdd(TValue value);
+        public bool Add(TValue value);
         /// <summary>
         /// 
         /// </summary>
-        public TValue TryRemove();
+        public TValue Remove();
+        #endregion
 
+        #region Changed
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedAdded;
+        public event Action<TValue> ChangedAdded;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedRemoved;
+        public event Action<TValue> ChangedRemoved;
+        #endregion
     }
 }

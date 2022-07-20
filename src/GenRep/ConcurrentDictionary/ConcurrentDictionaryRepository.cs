@@ -16,41 +16,56 @@ namespace GenRep.General
         where TKey : notnull
         where TValue : notnull
     {
+        #region Constructor
         /// <summary>
         /// 
         /// </summary>
-        protected readonly ConcurrentDictionary<TKey, TValue> _db;
-        /// <summary>
-        /// 
-        /// </summary>
-        public ConcurrentDictionaryRepository(ConcurrentDictionary<TKey, TValue> db)
+        public ConcurrentDictionaryRepository(ConcurrentDictionary<TKey, TValue> data)
         {
-            _db = db;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Count => _db.Count;
-        /// <summary>
-        /// 
-        /// </summary>
-        public ConcurrentDictionary<TKey, TValue> Data => _db;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public TValue TryGetValue(TKey key)
-        {
-            _db.TryGetValue(key, out var rtrn);
-            return rtrn;
+            this.data = data;
         }
         /// <summary>
         /// 
         /// </summary>
-        public TValue TryGetValue(Func<TValue, bool> filter)
+        public ConcurrentDictionaryRepository()
         {
-            return _db.Values.FirstOrDefault(filter);
+            this.data = new ConcurrentDictionary<TKey, TValue>();
+        }
+        #endregion
+
+        #region Data
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly ConcurrentDictionary<TKey, TValue> data;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ConcurrentDictionary<TKey, TValue> Data => data;
+        #endregion
+
+        #region Count
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Count => data.Count;
+        #endregion
+
+        #region CRUD
+        /// <summary>
+        /// 
+        /// </summary>
+        public TValue Get(TKey key)
+        {
+            data.TryGetValue(key, out TValue value);
+            return value;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public TValue Get(Func<TValue, bool> filter)
+        {
+            return data.Values.FirstOrDefault(filter);
         }
         /// <summary>
         /// 
@@ -58,52 +73,58 @@ namespace GenRep.General
         public List<TValue> GetAll(Func<TValue, bool> filter = null)
         {
             if (filter == null)
-                return _db.Values.ToList();
+                return data.Values.ToList();
             else
-                return _db.Values.Where(filter).ToList();
+                return data.Values.Where(filter).ToList();
         }
         /// <summary>
         /// 
         /// </summary>
-        public bool TryAdd(TKey key, TValue value)
+        public bool Add(TKey key, TValue value)
         {
-            var result = _db.TryAdd(key, value);
+            var result = data.TryAdd(key, value);
             if (result)
-                Task.Run(() => ChangedAdded?.Invoke(result));
+                ChangedAdded?.Invoke(value);
+                //Task.Run(() => ChangedAdded?.Invoke(value));
             return result;
         }
         /// <summary>
         /// 
         /// </summary>
-        public bool TryUpdate(TKey key, TValue value)
+        public bool Update(TKey key, TValue value)
         {
-            var result = _db.TryUpdate(key, value, value);
+            var result = data.TryUpdate(key, value, value);
             if (result)
-                Task.Run(() => ChangedUpdated?.Invoke(result));
+                ChangedUpdated?.Invoke(value);
+                //Task.Run(() => ChangedUpdated?.Invoke(value));
             return result;
         }
         /// <summary>
         /// 
         /// </summary>
-        public TValue TryRemove(TKey key)
+        public TValue Remove(TKey key)
         {
-            _db.TryRemove(key, out var rtrn);
-            if (rtrn != null)
-                Task.Run(() => ChangedRemoved?.Invoke(true));
-            return rtrn;
+            data.TryRemove(key, out TValue value);
+            if (value != null)
+                ChangedRemoved?.Invoke(value);
+                //Task.Run(() => ChangedRemoved?.Invoke(rtrn));
+            return value;
         }
+        #endregion
 
+        #region Changed
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedAdded;
+        public event Action<TValue> ChangedAdded;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedUpdated;
+        public event Action<TValue> ChangedUpdated;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedRemoved;
+        public event Action<TValue> ChangedRemoved;
+        #endregion
     }
 }
