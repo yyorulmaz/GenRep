@@ -8,58 +8,72 @@ namespace GenRep.ConcurrentQueue
     public class ConcurrentQueueRepository<TValue> : IConcurrentQueueRepository<TValue>
     //where T : class, new()
     {
+        #region Constructor
         /// <summary>
         /// 
         /// </summary>
-        protected readonly ConcurrentQueue<TValue> _db;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="db"></param>
-        public ConcurrentQueueRepository(ConcurrentQueue<TValue> db)
+        /// <param name="data"></param>
+        public ConcurrentQueueRepository(ConcurrentQueue<TValue> data)
         {
-            _db = db;
+            this.data = data;
         }
-
         /// <summary>
         /// 
         /// </summary>
-        public int Count => _db.Count;
+        public ConcurrentQueueRepository()
+        {
+            this.data = new ConcurrentQueue<TValue>();
+        }
+        #endregion
 
+        #region Data
         /// <summary>
         /// 
         /// </summary>
-        public ConcurrentQueue<TValue> Data => _db;
+        private readonly ConcurrentQueue<TValue> data;
+        /// <summary>
+        /// 
+        /// </summary>
+        public ConcurrentQueue<TValue> Data => data;
+        #endregion
 
+        #region Count
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Count => data.Count;
+        #endregion
+
+        #region CRUD
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public TValue TryGet()
+        public TValue Get()
         {
-            _db.TryPeek(out var data);
-            return data;
+            data.TryPeek(out var value);
+            return value;
         }
-
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public ConcurrentQueue<TValue> GetAll()
         {
-            return _db;
+            return data;
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public bool TryAdd(TValue value)
+        public bool Add(TValue value)
         {
             try
             {
-                _db.Enqueue(value);
-                Task.Run(() => ChangedAdded?.Invoke(true));
+                data.Enqueue(value);
+                ChangedAdded?.Invoke(value);
+                //Task.Run(() => ChangedAdded?.Invoke(value));
                 return true;
             }
             catch (Exception)
@@ -67,26 +81,29 @@ namespace GenRep.ConcurrentQueue
                 return false;
             }
         }
-
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public TValue TryRemove()
+        public TValue Remove()
         {
-            var result = _db.TryDequeue(out var data);
+            var result = data.TryDequeue(out var value);
             if (result)
-                Task.Run(() => ChangedRemoved?.Invoke(true));
-            return data;
+                ChangedRemoved?.Invoke(value);
+                //Task.Run(() => ChangedRemoved?.Invoke(value));
+            return value;
         }
+        #endregion
 
+        #region Changed
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedAdded;
+        public event Action<TValue> ChangedAdded;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedRemoved;
+        public event Action<TValue> ChangedRemoved;
+        #endregion
     }
 }

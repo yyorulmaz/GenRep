@@ -13,22 +13,29 @@ namespace GenRep.Contract
         where TKey : notnull
         where TValue : notnull
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Count { get; }
+        #region Data
         /// <summary>
         /// 
         /// </summary>
         public ConcurrentDictionary<TKey, TValue> Data { get; }
+        #endregion
+
+        #region Count
         /// <summary>
         /// 
         /// </summary>
-        TValue TryGetValue(TKey key);
+        public int Count { get; }
+        #endregion
+
+        #region CRUD
         /// <summary>
         /// 
         /// </summary>
-        TValue TryGetValue(Func<TValue, bool> filter);
+        TValue Get(TKey key);
+        /// <summary>
+        /// 
+        /// </summary>
+        TValue Get(Func<TValue, bool> filter);
         /// <summary>
         /// 
         /// </summary>
@@ -36,28 +43,30 @@ namespace GenRep.Contract
         /// <summary>
         /// 
         /// </summary>
-        bool TryAdd(TKey key, TValue value);
+        bool Add(TKey key, TValue value);
         /// <summary>
         /// 
         /// </summary>
-        bool TryUpdate(TKey key, TValue value);
+        bool Update(TKey key, TValue value);
         /// <summary>
         /// 
         /// </summary>
-        TValue TryRemove(TKey key);
+        TValue Remove(TKey key);
+        #endregion
 
-
+        #region Changed
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedAdded;
+        public event Action<TValue> ChangedAdded;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedUpdated;
+        public event Action<TValue> ChangedUpdated;
         /// <summary>
         /// 
         /// </summary>
-        public event Action<bool> ChangedRemoved;
+        public event Action<TValue> ChangedRemoved;
+        #endregion
     }
 }
