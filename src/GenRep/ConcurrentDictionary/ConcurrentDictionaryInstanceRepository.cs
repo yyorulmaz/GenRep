@@ -13,19 +13,17 @@ namespace GenRep.General
         where TValue : notnull
     {
         #region Constructor
-        public ConcurrentDictionaryInstanceRepository(IConcurrentDictionaryRepository<TKey, TValue> dataMain, ConcurrentDictionary<TKey, TValue> data, ConcurrentDictionary<TKey, TValue> dataTemp, ConcurrentDictionary<TKey, TValue> dataTempAgain)
+        public ConcurrentDictionaryInstanceRepository(IConcurrentDictionaryRepository<TKey, TValue> dataMain, ConcurrentDictionary<TKey, TValue> data, ConcurrentDictionary<TKey, TValue> dataTemp)
         {
             this.dataMain = dataMain;
             this.data = data;
             this.dataTemp = dataTemp;
-            this.dataTempAgain = dataTempAgain;
         }
         public ConcurrentDictionaryInstanceRepository(IConcurrentDictionaryRepository<TKey, TValue> dataMain)
         {
             this.dataMain = dataMain;
             this.data = new ConcurrentDictionary<TKey, TValue>();
             this.dataTemp = new ConcurrentDictionary<TKey, TValue>();
-            this.dataTempAgain = new ConcurrentDictionary<TKey, TValue>();
         }
         #endregion
 
@@ -40,16 +38,11 @@ namespace GenRep.General
 
         private readonly ConcurrentDictionary<TKey, TValue> dataTemp;
         public ConcurrentDictionary<TKey, TValue> DataTemp => dataTemp;
-
-
-        private readonly ConcurrentDictionary<TKey, TValue> dataTempAgain;
-        public ConcurrentDictionary<TKey, TValue> DataTempAgain => dataTempAgain;
         #endregion
 
         #region Count
         public int Count => data.Count;
         public int CountTemp => dataTemp.Count;
-        public int CountTempAgain => dataTempAgain.Count;
         #endregion
 
         #region CRUD
@@ -58,18 +51,9 @@ namespace GenRep.General
             data.TryGetValue(key, out TValue value);
             return value;
         }
-        public TValue GetTempAgain(TKey key)
-        {
-            dataTempAgain.TryGetValue(key, out TValue value);
-            return value;
-        }
         public TValue Get(Func<TValue, bool> filter)
         {
             return data.Values.FirstOrDefault(filter);
-        }
-        public TValue GetTempAgain(Func<TValue, bool> filter)
-        {
-            return dataTempAgain.Values.FirstOrDefault(filter);
         }
         public List<TValue> GetAll(Func<TValue, bool> filter = null)
         {
@@ -91,13 +75,6 @@ namespace GenRep.General
             var result = dataTemp.TryAdd(key, value);
             if (result)
                 ChangedTempAdded?.Invoke(value);
-            return result;
-        }
-        public bool AddTempAgain(TKey key, TValue value)
-        {
-            var result = dataTempAgain.TryAdd(key, value);
-            if (result)
-                ChangedTempAgainAdded?.Invoke(value);
             return result;
         }
         public bool Update(TKey key, TValue value)
@@ -145,7 +122,6 @@ namespace GenRep.General
         public event Action<TValue> ChangedRemoved;
         public event Action<TValue> ChangedTempAdded;
         public event Action<TValue> ChangedRemovedAndAddTemp;
-        public event Action<TValue> ChangedTempAgainAdded;
         #endregion
     }
 }
