@@ -13,19 +13,19 @@ namespace GenRep.General
         where TValue : notnull
     {
         #region Constructor
-        public ConcurrentDictionaryInstanceRepository(ConcurrentDictionary<TKey, TValue> data, ConcurrentDictionary<TKey, TValue> dataTemp, ConcurrentDictionary<TKey, TValue> dataTempAgain, IConcurrentDictionaryRepository<TKey, TValue> dataMain)
+        public ConcurrentDictionaryInstanceRepository(IConcurrentDictionaryRepository<TKey, TValue> dataMain, ConcurrentDictionary<TKey, TValue> data, ConcurrentDictionary<TKey, TValue> dataTemp, ConcurrentDictionary<TKey, TValue> dataTempAgain)
         {
-            this.data = data;
             this.dataMain = dataMain;
+            this.data = data;
             this.dataTemp = dataTemp;
             this.dataTempAgain = dataTempAgain;
         }
         public ConcurrentDictionaryInstanceRepository(IConcurrentDictionaryRepository<TKey, TValue> dataMain)
         {
+            this.dataMain = dataMain;
             this.data = new ConcurrentDictionary<TKey, TValue>();
             this.dataTemp = new ConcurrentDictionary<TKey, TValue>();
             this.dataTempAgain = new ConcurrentDictionary<TKey, TValue>();
-            this.dataMain = dataMain;
         }
         #endregion
 
