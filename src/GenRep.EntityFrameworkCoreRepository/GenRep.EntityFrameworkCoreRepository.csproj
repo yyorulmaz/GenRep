@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
+		<TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
 		<Copyright>2022 © Yusuf Yorulmaz</Copyright>
 		<Description>Generic Repository</Description>
 		<Authors>Yusuf Yorulmaz</Authors>
 		<Company>yorulmaz software</Company>
-		<Version>0.0.1</Version>
+		<Version>0.0.2</Version>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<!--<GenerateDocumentationFile>true</GenerateDocumentationFile>-->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -35,15 +35,9 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<PackageReference Include="Microsoft.EntityFrameworkCore">
-			<Version>5.0.0</Version>
-		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-		<PackageReference Include="Microsoft.EntityFrameworkCore">
-			<Version>3.1.9</Version>
+			<Version>3.1.28</Version>
 		</PackageReference>
 	</ItemGroup>
 	
